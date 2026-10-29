@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Для Мариши ♡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --plum:#24123f; --night:#3b1d62; --rose:#ff7eb6; --peach:#ffc9a3; --lilac:#b9a4ff; --mint:#9bf0d0; --star:#fff4e6;
+  --ink:#fff4e6; --glass:rgba(255,255,255,.09); --line:rgba(255,255,255,.22);
+  --script:'Marck Script','Segoe Script',cursive; --sans:'Nunito','Trebuchet MS',system-ui,sans-serif;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--plum:#24123f}}
+:root[data-theme="dark"]{--plum:#24123f}
+html{height:100%;scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100%;background:radial-gradient(1200px 800px at 15% 0%,#6b2f9a 0%,transparent 60%),radial-gradient(900px 700px at 100% 40%,#c2418f66 0%,transparent 60%),linear-gradient(180deg,var(--night),var(--plum));
+  background-color:var(--plum);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.6;overflow-x:hidden}
+canvas#fx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
+section{position:relative;z-index:2;max-width:980px;margin:0 auto;padding:90px 22px}
+h1,h2{font-family:var(--script);font-weight:400;margin:0;line-height:1.05}
+h2{font-size:clamp(38px,7vw,64px);text-align:center;margin-bottom:12px;color:var(--peach)}
+.sub{text-align:center;opacity:.8;max-width:520px;margin:0 auto 40px}
+
+/* hero */
+#hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.pre{font-size:20px;opacity:.85;margin:0 0 6px}
+h1{font-size:clamp(84px,24vw,230px);background:linear-gradient(100deg,var(--rose),var(--peach) 45%,var(--lilac));-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 8px 40px rgba(255,126,182,.45));cursor:pointer;padding:0 .1em;animation:rise 1.6s cubic-bezier(.2,.8,.2,1) both,sway 7s 1.6s ease-in-out infinite}
+@keyframes rise{from{opacity:0;transform:translateY(40px) scale(.9);letter-spacing:.2em}to{opacity:1;transform:none}}
+@keyframes sway{50%{transform:rotate(-1.5deg) translateY(-6px)}}
+.tag{font-size:clamp(20px,3.4vw,28px);max-width:560px;margin:10px 0 34px}
+.btn{font:800 17px var(--sans);border:0;border-radius:999px;padding:15px 30px;cursor:pointer;color:var(--plum);background:linear-gradient(120deg,var(--peach),var(--rose));
+  box-shadow:0 10px 30px rgba(255,126,182,.4);transition:transform .2s}
+.btn:hover{transform:scale(1.06) rotate(-1deg)}
+.btn:focus-visible,.card:focus-visible,.nick:focus-visible{outline:3px solid var(--mint);outline-offset:3px}
+.scroll{position:absolute;bottom:26px;opacity:.6;font-size:15px}
+
+/* nicknames */
+#nicks{display:flex;flex-wrap:wrap;gap:12px 14px;justify-content:center}
+.nick{font-family:var(--script);font-size:clamp(26px,4.6vw,38px);border:1px solid var(--line);background:var(--glass);color:var(--ink);border-radius:999px;padding:6px 24px;cursor:pointer;
+  backdrop-filter:blur(6px);transition:.25s}
+.nick:hover{background:var(--rose);color:var(--plum);transform:translateY(-4px) rotate(-2deg)}
+.nick:nth-child(3n){border-color:var(--mint)}.nick:nth-child(3n+1){border-color:var(--lilac)}
+#nickNote{text-align:center;min-height:2em;margin-top:26px;color:var(--mint);font-weight:600}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
+.card{perspective:900px;height:200px;cursor:pointer;background:none;border:0;padding:0;font:inherit;color:inherit;text-align:center}
+.in{position:relative;width:100%;height:100%;transition:transform .7s cubic-bezier(.3,1.3,.5,1);transform-style:preserve-3d}
+.card.on .in{transform:rotateY(180deg)}
+.f,.b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;border:1px solid var(--line)}
+.f{background:var(--glass);backdrop-filter:blur(8px);font-family:var(--script);font-size:32px}
+.f i{font-style:normal;font-size:44px;margin-bottom:4px}
+.b{transform:rotateY(180deg);background:linear-gradient(145deg,#ff7eb6cc,#b9a4ffcc);color:var(--plum);font-weight:600;font-size:17px}
+
+/* cake */
+#cakeWrap{text-align:center}
+svg{max-width:300px;width:80%;height:auto;overflow:visible}
+.flame{transform-origin:150px 62px;animation:fl .35s infinite alternate ease-in-out;transition:opacity .4s}
+@keyframes fl{from{transform:scale(1,1) rotate(-3deg)}to{transform:scale(.9,1.12) rotate(3deg)}}
+.off .flame{opacity:0}
+.smoke{opacity:0}.off .smoke{animation:sm 2s ease-out}
+@keyframes sm{0%{opacity:.7;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
+#wishOut{font-family:var(--script);font-size:clamp(28px,5vw,40px);color:var(--mint);min-height:1.6em;margin:18px auto 0;max-width:640px}
+
+/* letter */
+.letter{background:linear-gradient(160deg,#fff4e6,#ffe3ef);color:#3a1f4f;border-radius:10px;padding:clamp(28px,6vw,60px);box-shadow:0 30px 80px rgba(0,0,0,.4);transform:rotate(-.6deg);position:relative}
+.letter::before{content:"♡";position:absolute;top:-24px;right:34px;font-size:56px;color:var(--rose);text-shadow:0 6px 20px rgba(255,126,182,.6)}
+.letter p{margin:0 0 16px;font-size:19px;line-height:1.75}
+.letter .hi,.letter .sig{font-family:var(--script);font-size:38px;line-height:1.2;color:#b02a74}
+.sig{text-align:right;margin-top:24px}
+footer{position:relative;z-index:2;text-align:center;padding:50px 20px 70px;font-family:var(--script);font-size:30px;color:var(--peach)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<section id="hero">
+  <p class="pre">специально для самой-самой</p>
+  <h1 id="name" title="Нажми!">Мариша</h1>
+  <p class="tag">Тебя поздравляют вся вселенная, мои звёзды и я, твой лучший друг, громче всех.</p>
+  <button class="btn" id="open">Открыть подарок ✨</button>
+  <span class="scroll">а потом — листай вниз ↓</span>
+</section>
+
+<section>
+  <h2>Как тебя только не зовут</h2>
+  <p class="sub">Нажимай на имена — у каждого своя история.</p>
+  <div id="nicks"></div>
+  <div id="nickNote" aria-live="polite"></div>
+</section>
+
+<section>
+  <h2>Почему ты — лучшая</h2>
+  <p class="sub">Переверни каждую карточку. Тут чистая правда, без преувеличений.</p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="cakeWrap">
+  <h2>Загадай желание</h2>
+  <p class="sub">Нажми на торт — свеча погаснет, а желание обязательно сбудется.</p>
+  <svg id="cake" viewBox="0 0 300 300" role="button" tabindex="0" aria-label="Задуть свечу" style="cursor:pointer">
+    <ellipse cx="150" cy="276" rx="130" ry="14" fill="#00000040"/>
+    <rect x="40" y="190" width="220" height="80" rx="18" fill="#ff7eb6"/>
+    <rect x="70" y="130" width="160" height="66" rx="16" fill="#ffc9a3"/>
+    <path d="M40 206q18 18 36 0t36 0 36 0 36 0 36 0 36 0v-16H40z" fill="#fff4e6"/>
+    <path d="M70 146q13 14 26 0t26 0 26 0 26 0 26 0v-16H70z" fill="#fff4e6"/>
+    <circle cx="90" cy="238" r="7" fill="#9bf0d0"/><circle cx="150" cy="244" r="7" fill="#b9a4ff"/><circle cx="210" cy="238" r="7" fill="#fff4e6"/>
+    <rect x="144" y="84" width="12" height="50" rx="4" fill="#9bf0d0"/>
+    <g class="flame"><path d="M150 40c14 14 14 28 0 38-14-10-14-24 0-38z" fill="#ffb347"/><path d="M150 54c7 7 7 14 0 20-7-6-7-13 0-20z" fill="#fff4e6"/></g>
+    <path class="smoke" d="M150 70q-10-14 0-26t0-24" stroke="#fff4e6" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </svg>
+  <div id="wishOut" aria-live="polite"></div>
+  <button class="btn" id="wishBtn" style="margin-top:14px">Ещё одно пожелание 🌟</button>
+</section>
+
+<section>
+  <h2>Письмо тебе</h2>
+  <p class="sub">&nbsp;</p>
+  <div class="letter">
+    <p class="hi">Мариночка, родная моя!</p>
+    <p>Знаешь, есть люди, рядом с которыми дышится легче. Ты — именно такая. С тобой любой дождливый вторник превращается в праздник, а любая беда становится просто «ну ладно, прорвёмся».</p>
+    <p>Спасибо, что ты всегда рядом: когда смешно, когда грустно и когда я несу полную чушь, а ты всё равно говоришь, что я прав. Ты умеешь слушать, обнимать словами и находить именно те слова, которые нужны.</p>
+    <p>Желаю тебе, чтобы жизнь баловала тебя так же щедро, как ты балуешь всех вокруг: любовью, радостью, красивыми путешествиями, вкусным кофе и мечтами, которые сбываются раньше, чем ты успеешь их загадать.</p>
+    <p>Ты — моё счастье в человеческом обличье. Дорожу тобой бесконечно.</p>
+    <p class="sig">Твой лучший друг ♡</p>
+  </div>
+</section>
+
+<footer>Мариша, ты — чудо. Обнимаю крепко! 🤗</footer>
+
+<script>
+"use strict";
+const $=s=>document.querySelector(s), rnd=(a,b)=>a+Math.random()*(b-a), pick=a=>a[Math.floor(Math.random()*a.length)];
+
+/* ---------- canvas: floating petals + confetti ---------- */
+const cv=$('#fx'), cx=cv.getContext('2d'); let W,H,dpr;
+function size(){dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;cx.setTransform(dpr,0,0,dpr,0,0)}
+size(); addEventListener('resize',size);
+const cols=['#ff7eb6','#ffc9a3','#b9a4ff','#9bf0d0','#fff4e6'], glyphs=['♥','♡','✦','✿','❀'];
+const parts=[];
+function spawn(x,y,o={}){parts.push({x,y,vx:o.vx??rnd(-.4,.4),vy:o.vy??rnd(.5,1.4),g:o.g??0,r:rnd(0,6.28),vr:rnd(-.03,.03),s:o.s??rnd(12,26),c:pick(cols),ch:o.ch??pick(glyphs),life:o.life??Infinity,a:1,sq:o.sq})}
+for(let i=0;i<26;i++)spawn(rnd(0,innerWidth),rnd(0,innerHeight));
+function burst(x,y,n=90){for(let i=0;i<n;i++){const a=rnd(0,6.28),v=rnd(3,11);spawn(x,y,{vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,g:.18,s:rnd(8,20),life:rnd(80,150),sq:Math.random()<.4})}}
+function hearts(x,y){for(let i=0;i<14;i++)spawn(x+rnd(-30,30),y,{vx:rnd(-1.5,1.5),vy:rnd(-4,-1.5),g:.02,s:rnd(16,32),life:rnd(70,120),ch:pick(['♥','♡','💖'])})}
+function loop(){
+  cx.clearRect(0,0,W,H);
+  for(let i=parts.length-1;i>=0;i--){const p=parts[i];
+    p.vy+=p.g;p.x+=p.vx+(p.life===Infinity?Math.sin(p.y/60+p.r)*.5:0);p.y+=p.vy;p.r+=p.vr;
+    if(p.life!==Infinity){p.life--;p.a=Math.min(1,p.life/40);if(p.life<=0||p.y>H+40){parts.splice(i,1);continue}}
+    else if(p.y>H+30){p.y=-30;p.x=rnd(0,W)}
+    cx.save();cx.globalAlpha=p.life===Infinity?.55:p.a;cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;
+    if(p.sq){cx.fillRect(-p.s/3,-p.s/6,p.s*.66,p.s/3)}else{cx.font=p.s+'px serif';cx.textAlign='center';cx.textBaseline='middle';cx.fillText(p.ch,0,0)}
+    cx.restore()}
+  requestAnimationFrame(loop)}
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)loop();
+
+/* ---------- hero ---------- */
+$('#name').addEventListener('click',e=>hearts(e.clientX,e.clientY));
+$('#open').addEventListener('click',e=>{burst(innerWidth/2,innerHeight/2,140);setTimeout(()=>$('#nicks').scrollIntoView({behavior:'smooth',block:'center'}),900)});
+
+/* ---------- nicknames ---------- */
+const nicks={
+ 'Маришка':'Классика жанра. Так тебя зовёт тот, кто любит по-настоящему.',
+ 'Мариночка':'Для особых случаев, когда нужно что-то очень важное сказать мягким голосом.',
+ 'Маруся':'Тёплая, уютная, как плед и какао.',
+ 'Малинка':'Яркая, сладкая и с лёгкой колючестью, как настоящая малина.',
+ 'Солнышко':'С тобой всегда светлее, даже ночью.',
+ 'Звёздочка':'Ты светишь так, что видно из космоса.',
+ 'Принцесса Марина':'Осанка, стиль, характер: всё как положено.',
+ 'Ромашка':'Нежная и светлая: рядом с тобой всё становится проще.',
+ 'Моя радость':'Просто. И этого достаточно.',
+ 'Чудо':'Потому что ты настоящее чудо, и это даже не обсуждается.'
+};
+$('#nicks').innerHTML=Object.keys(nicks).map(n=>`<button class="nick">${n}</button>`).join('');
+$('#nicks').addEventListener('click',e=>{const b=e.target.closest('.nick');if(!b)return;$('#nickNote').textContent=nicks[b.textContent];const r=b.getBoundingClientRect();hearts(r.left+r.width/2,r.top)});
+
+/* ---------- reasons ---------- */
+const reasons=[
+ ['🌸','Ты тёплая','Рядом с тобой хочется быть собой — и это самый ценный подарок.'],
+ ['🌟','Ты вдохновляешь','Глядя на тебя, хочется становиться лучше и не бояться своих мечтаний.'],
+ ['🫶','Ты надёжная','Позвонила в три ночи — ты уже собираешься ехать. Спасибо за это.'],
+ ['✨','Ты красивая','Не только снаружи. Но снаружи тоже, не будем скромничать.'],
+ ['🧠','Ты умная','Твои советы работают лучше любого гугла и психолога вместе взятых.'],
+ ['🎀','Ты — мой человек','Лучшая подруга на свете. Не обсуждается, не оспаривается, не возвращается.']
+];
+$('#grid').innerHTML=reasons.map(r=>`<button class="card" aria-label="${r[1]}"><div class="in"><div class="f"><i>${r[0]}</i>${r[1]}</div><div class="b">${r[2]}</div></div></button>`).join('');
+$('#grid').addEventListener('click',e=>{const c=e.target.closest('.card');if(!c)return;c.classList.toggle('on');if(c.classList.contains('on')){const r=c.getBoundingClientRect();hearts(r.left+r.width/2,r.top+r.height/2)}});
+
+/* ---------- cake & wishes ---------- */
+const wishes=['Пусть все мечты сбываются без очереди и без доставки по предоплате 🚀','Больше путешествий, меньше будильников ☀️','Пусть рядом будут только те, кто делает тебя счастливой 💞','Пусть кофе всегда будет горячим, а настроение — отличным ☕','Пусть любовь найдёт тебя везде, даже в пробке 💘','Желаю денег, смеха и очень красивых платьев 👗','Пусть каждый день будет немножко праздником 🎉','Здоровья, силы и вдохновения — на все твои планы 🌷'];
+let lastW=-1;
+function wish(){let i;do{i=Math.floor(Math.random()*wishes.length)}while(i===lastW);lastW=i;$('#wishOut').textContent=wishes[i];burst(innerWidth/2,innerHeight*.6,60)}
+const cake=$('#cake');
+function blow(){cake.classList.add('off');burst(innerWidth/2,innerHeight/2,160);setTimeout(wish,350)}
+cake.addEventListener('click',blow);cake.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();blow()}});
+$('#wishBtn').addEventListener('click',()=>{cake.classList.remove('off');void cake.offsetWidth;wish()});
+</script>
+</body>
+</html>
